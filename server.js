@@ -64,12 +64,16 @@ app.get("/logout", function(request, response) {
 
 app.get("/myendpoint", function(request, response) {
   var loggedInSpotifyApi = new SpotifyWebApi();
+  // console.log("enpoint");
+  // console.log("request");
   console.log(request.headers["authorization"].split(" ")[1]);
   loggedInSpotifyApi.setAccessToken(
     request.headers["authorization"].split(" ")[1]
   );
+
   // Search for a track!
   loggedInSpotifyApi.getMyTopTracks().then(
+    //where is the second )??
     function(data) {
       console.log(data.body);
       response.send(data.body);
@@ -80,6 +84,36 @@ app.get("/myendpoint", function(request, response) {
   );
 });
 
+//attempting to get the audio features of a track; loop thru each song in toptracks, run this get audio features?
+//then add to the list of objects?
+app.get("/features", function(request, response) {
+  console.log("server");
+  // console.log(request);
+  console.log(request.query.id);
+
+  var loggedInSpotifyApi = new SpotifyWebApi();
+  // console.log("enpoint");
+  // console.log("request");
+  console.log(request.headers["authorization"].split(" ")[1]);
+  loggedInSpotifyApi.setAccessToken(
+    request.headers["authorization"].split(" ")[1]
+  );
+
+  loggedInSpotifyApi
+    .getAudioFeaturesForTrack(request.query.id)
+    //need to get comma separated list of spotify ids for tracks, max 100
+    .then(
+      function(data) {
+        // console.log("server request");
+        console.log(data.body);
+        response.send(data.body);
+      },
+      function(err) {
+        console.log("server request");
+        console.log(err);
+      }
+    );
+});
 //-------------------------------------------------------------//
 
 // listen for requests :)

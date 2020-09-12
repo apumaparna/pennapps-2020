@@ -8,7 +8,7 @@ let sentimentResult;
 
 function setup() {
   console.log("sentiment called"); 
-  noCanvas();
+  // noCanvas();
   // initialize sentiment
   sentiment = ml5.sentiment('movieReviews', modelReady);
 
