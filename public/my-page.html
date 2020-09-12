@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Hello!</title>
-    
+
     <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
-     <!-- import cdn -->
+    <link rel="stylesheet" href="/style.css" />
+    <!-- import cdn -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
     <script
@@ -18,30 +18,30 @@
     ></script>
 
     <!-- import the webpage's javascript file -->
-    <script src="/javascript/sentiment-analysis.js" defer></script>
- 
-  </head>  
+<!--     <script src="/javascript/sentiment-analysis.js" defer></script> -->
+  </head>
   <body>
     <h1>Hi there!</h1>
-    
+
     <p>
-      I'm your cool new webpage. Made with <a href="https://glitch.com">Glitch</a>!
+      I'm your cool new webpage. Made with
+      <a href="https://glitch.com">Glitch</a>!
     </p>
 
     <!-- include the Glitch button to show what the webpage is about and
           to make it easier for folks to view source and remix -->
     <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
     <script src="https://button.glitch.me/button.js" defer></script>
-    
+
     <main>
       <div id="data-container">
         <ol>
-<!--           <li> Hello </li> -->
+          <!--           <li> Hello </li> -->
           <!-- This is where we will append our data -->
         </ol>
       </div>
     </main>
-    
+
     <!-- Your web-app is https, so your scripts need to be too -->
     <script
       src="https://code.jquery.com/jquery-2.2.1.min.js"
@@ -49,6 +49,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="/client.js"></script>
-    
+
+    <script src="/javascript/sentiment-analysis.js"></script>
+    <script src="/javascript/word-clouds.js"></script>
   </body>
 </html>
