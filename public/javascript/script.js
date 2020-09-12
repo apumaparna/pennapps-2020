@@ -25,12 +25,6 @@ function setup() {
     colorMode(HSB);
     background(0);
   }
-
-  // if (dataReady == true) {
-  //   console.log(data);
-  //   spotData = data;
-  //   console.log(spotData);
-  // }
 }
 
 function draw() {
