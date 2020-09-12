@@ -1,0 +1,16 @@
+/* CSS files add styling rules to your content */
+/* https://coolors.co/476a6f-519e8a-7eb09b-8a6a79-e5d0cc */
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 2em;
+}
+
+h1 {
+  font-style: italic;
+  color: #519E8A;
+}
+
+h2 {
+  font-style: italic;
+  color: #476A6F;
+}
