@@ -1,4 +1,4 @@
-/* global getData spotifyData flag data dataReady featureData*/
+/* global getData spotifyData flag data dataReady featureData sentSetup getLyrics*/
 
 /* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill noFill random color stroke textAlign CENTER text textSize
 textStyle BOLD textFont loadFont*/
@@ -24,17 +24,14 @@ function preload() {
 function setup() {
   console.log("startScript");
 
-  createCanvas(windowWidth, windowHeight);
+  let cnv = createCanvas(windowWidth, windowHeight);
+  cnv.parent("p5sketch"); 
   colorMode(HSB, 360, 100, 100, 100);
   background(100);
   textFont(myFont); 
+  
+  sentSetup(); 
 
-  if (flag == true) {
-    createCanvas(windowWidth, windowHeight);
-    colorMode(HSB);
-    background(100);
-    noStroke();
-  }
 }
 
 function draw() {
@@ -48,13 +45,22 @@ function draw() {
     features = featureData;
     console.log("ready2");
     featReady = true;
-    console.log(features);
-    console.log(features.length);
+    //console.log(features);
+    //console.log(features.length);
 
     background(100);
     for (let i = 0; i < data.length; i++) {
       let trSpot = data[i];
       let trFeach = features[i];
+      
+      //console.log(trSpot); 
+      var name = trSpot.name;
+      //console.log(name);
+      var artist = trSpot.artists[0].name; 
+      //console.log(artist); 
+      
+      getLyrics(artist, name); 
+    
       objArr.push(
         new SongObject(
           trFeach.valence,
@@ -133,6 +139,8 @@ class SongObject {
   // Draw each circle
   draw() {
     noStroke();
+    fill(this.color, 100, 85, 90, 5);
+    circle(this.x + 3, this.y - 2, this.r);
     fill(this.color, 80, 95, 90);
     circle(this.x, this.y, this.r);
     
