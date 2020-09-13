@@ -98,9 +98,21 @@ function draw() {
 
     var mostFrq = commonWords(allLy);
     console.log(mostFrq);
+    
+    var mostWrd =''
+    
+    for (let i = 0; i < mostFrq.length; i++ ){
+      let wrd = mostFrq[i];  
+      
+      mostWrd = mostWrd + " " + wrd; 
+    }
+    
     avgSent = avgSentiment();
-
-    document.getElementById("sentimentScore").innerHTML = `Sentiment score: ${avgSent}`;
+    
+    document.getElementById("commonWords").innerHTML = `Your most common words are: ${mostWrd}`; 
+    
+    if (!(Number.isNaN(avgSent))) {
+    document.getElementById("sentimentScore").innerHTML = `Sentiment score: ${avgSent}`; }
     // var score = document.getElementById("sentimentScore");
     // score.setAttribute("label", "Sentiment score: " + avgSent);
     console.log("below is the average sentiment:");
