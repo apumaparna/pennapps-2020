@@ -1,6 +1,7 @@
 /* global getData spotifyData flag data dataReady featureData*/
 
-/* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill noFill random color stroke*/
+/* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill noFill random color stroke textAlign CENTER text textSize
+textStyle BOLD textFont loadFont*/
 
 //https://ml5js.org/reference/api-Sentiment/
 
@@ -13,6 +14,12 @@ let featReady = false;
 let objArr = [];
 let wavArr = [];
 
+let myFont; 
+
+function preload() {
+  myFont = loadFont("https://cdn.glitch.com/0700a511-6546-4ad1-b794-600ce932e80f%2FJosefinSans-Regular.ttf?v=1599958559841")
+}
+
 // let spotData = [];
 function setup() {
   console.log("startScript");
@@ -20,6 +27,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
   background(100);
+  textFont(myFont); 
 
   if (flag == true) {
     createCanvas(windowWidth, windowHeight);
@@ -127,6 +135,14 @@ class SongObject {
     noStroke();
     fill(this.color, 80, 95, 90);
     circle(this.x, this.y, this.r);
+    
+    textAlign(CENTER, CENTER); 
+    textSize(24); 
+    textStyle(BOLD);
+    
+    fill(this.color, 100, 60, 100); 
+    text(this.pop, this.x, this.y);  
+    
   }
 
   pulse() {

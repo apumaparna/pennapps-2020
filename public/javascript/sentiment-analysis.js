@@ -94,7 +94,10 @@ function commonWords(lyrics) {
   }
   console.log(words);
   
-  var frqs = frequencies(words); //[a,b]
+  var frqs = frequencies(words); //[words,frqs]
+  for (let i=0; i<10, i++) {
+    
+  }
   
   //console.log(words.join(" "));
   getSentiment(words.join(" "));
