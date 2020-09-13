@@ -7,6 +7,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "chart.js": "^3.0.0-beta",
+    "chartjs-chart-wordcloud": "^3.0.0-beta.1",
     "express": "^4.17.1",
     "genius-api": "^0.4.1",
     "genius-lyrics": "^3.0.0",

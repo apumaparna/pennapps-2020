@@ -4,6 +4,10 @@
 // init project
 var express = require("express");
 var app = express();
+var lyrics = require('genius-lyrics-api');
+//import { getLyrics, getSong } from 'genius-lyrics-api';
+var Lyricist = require('lyricist');
+const lyricist = new Lyricist(process.env.GENIUS_TOKEN)
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));

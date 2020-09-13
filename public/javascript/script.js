@@ -1,6 +1,6 @@
 /* global getData spotifyData flag data dataReady featureData*/
 
-/* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill random color*/
+/* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill noFill random color stroke*/
 
 //https://ml5js.org/reference/api-Sentiment/
 
@@ -11,6 +11,7 @@ let spotReady = false;
 let featReady = false;
 
 let objArr = [];
+let wavArr = [];
 
 // let spotData = [];
 function setup() {
@@ -18,12 +19,12 @@ function setup() {
 
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
-  background(0);
+  background(100);
 
   if (flag == true) {
     createCanvas(windowWidth, windowHeight);
     colorMode(HSB);
-    background(0);
+    background(100);
     noStroke();
   }
 }
@@ -42,7 +43,7 @@ function draw() {
     console.log(features);
     console.log(features.length);
 
-    background(0);
+    background(100);
     for (let i = 0; i < data.length; i++) {
       let trSpot = data[i];
       let trFeach = features[i];
@@ -61,7 +62,7 @@ function draw() {
     console.log(objArr.length);
   }
 
-  background(0);
+  background(100);
 
   if (spotReady && featReady) {
     if (objArr.length > 0) {
@@ -69,8 +70,27 @@ function draw() {
       objArr.forEach(function(obj) {
         obj.draw();
         obj.pulse();
-        // console.log("draw");
       });
+    }
+    if (wavArr.length > 0) {
+      let removeArr = [];
+
+      for (let i = 0; i < wavArr.length; i++) {
+        let wave = wavArr[i];
+        wave.draw();
+        let op = wave.getOpacity();
+        if (op < 0) {
+          // console.log("disappeared");
+          removeArr.push(i); 
+        }
+      }
+
+      // console.log("moving on");
+      for (let i = 0; i < removeArr.length; i++) {
+        let j = removeArr[i];
+        wavArr.splice(j, 1);
+        // console.log(wavArr.length);
+      }
     }
   }
 }
@@ -83,47 +103,74 @@ class SongObject {
     this.tempo = tempo;
     this.pop = pop;
     this.pref = pref;
-    
+
     this.growing = true;
-    this.pulseRate = this.tempo/200 * 1; 
+    this.pulseRate = (this.tempo / 200) * 1;
 
     this.color = 210 - 180 * this.valence;
     // this.x = random(windowWidth);
     // this.y = random(windowHeight);
     // this.r = random(50);
-    
-    this.r = this.pop *0.90;
-    
-    this.x = (windowWidth / 20) * this.pref;
+
+    this.r = this.pop * 0.9;
+
+    this.x = (windowWidth / 22) * (this.pref + 1);
     this.y = windowHeight - windowHeight * this.dance;
+
+    this.waves = [];
+
+    this.rr = this.r;
   }
 
   // Draw each circle
   draw() {
-    console.log(this.tempo); 
-    fill(this.color, 100, 100, 90);
+    noStroke();
+    fill(this.color, 80, 95, 90);
     circle(this.x, this.y, this.r);
-    // console.log(this.dance);
   }
 
   pulse() {
     // this.r -= 1;
 
     if (this.growing) {
-      if (this.r <= this.pop *0.90 * 1.20) {
+      if (this.r <= this.pop * 0.9 * 1.2) {
         this.r += this.pulseRate;
       } else {
         this.growing = false;
       }
     } else {
-      if (this.r >= this.pop * 0.90) {
+      if (this.r >= this.pop * 0.9) {
+        if (this.r >= this.pop * 0.9 * 1.2) {
+          // console.log("reached");
+          wavArr.push(new Ripple(this.color, this.x, this.y, this.r));
+        }
         this.r -= this.pulseRate;
       } else {
         this.growing = true;
       }
     }
   }
+}
 
-  // creates the radiation
-  radiate() {}
+class Ripple {
+  constructor(color, x, y, r) {
+    this.color = color;
+    this.x = x;
+    this.y = y;
+    this.r = r;
+    this.opacity = 100;
+  }
+
+  draw() {
+    // console.log("ripple");
+    noFill();
+    stroke(this.color, 100, 100, this.opacity);
+    circle(this.x, this.y, this.r);
+    this.r += 2;
+    this.opacity -= 1.2;
+  }
+
+  getOpacity() {
+    return this.opacity;
+  }
 }
