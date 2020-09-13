@@ -12,6 +12,12 @@ const lyricist = new Lyricist(process.env.GENIUS_TOKEN)
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname,'public','javascript')));
+
+// app.use(express.static(path.join(__dirname,"public")))
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function(request, response) {
   response.sendFile(__dirname + "/index.html");

@@ -1,4 +1,4 @@
-/* global getData spotifyData flag data dataReady featureData sentSetup getLyrics*/
+/* global getData spotifyData flag data dataReady featureData sentSetup getLyrics commonWords allLyrics avgSentiment*/
 
 /* global windowWidth windowHeight createCanvas background noStroke colorMode HSB circle fill noFill random color stroke textAlign CENTER text textSize
 textStyle BOLD textFont loadFont*/
@@ -15,6 +15,11 @@ let objArr = [];
 let wavArr = [];
 
 let myFont; 
+
+let allLy = ''
+let pastLen = 0; 
+
+let avgSent;
 
 function preload() {
   myFont = loadFont("https://cdn.glitch.com/0700a511-6546-4ad1-b794-600ce932e80f%2FJosefinSans-Regular.ttf?v=1599958559841")
@@ -35,6 +40,7 @@ function setup() {
 }
 
 function draw() {
+  // console.log(allLyrics);
   if (spotifyData.length > 0 && data.length == 0) {
     data = spotifyData;
     console.log("ready1");
@@ -49,17 +55,23 @@ function draw() {
     //console.log(features.length);
 
     background(100);
+    
+    //var allLyrics = "";
+    
     for (let i = 0; i < data.length; i++) {
       let trSpot = data[i];
       let trFeach = features[i];
       
       //console.log(trSpot); 
       var name = trSpot.name;
-      //console.log(name);
+      console.log(name);
       var artist = trSpot.artists[0].name; 
       //console.log(artist); 
       
-      getLyrics(artist, name); 
+      console.log("get")
+      //console.log(getLyrics(artist, name))
+      getLyrics(artist, name)
+      //allLyrics += getLyrics(artist, name); //string
     
       objArr.push(
         new SongObject(
@@ -72,8 +84,27 @@ function draw() {
         )
       );
     }
-
-    console.log(objArr.length);
+    //console.log("successfully exited!")
+    // console.log(allLyrics);
+    //console.log(objArr.length);
+  }
+  
+  let curLen = allLyrics.length;  
+  if (curLen == pastLen && allLy == '') {
+    // console.log(allLyrics); 
+    allLy = allLyrics; 
+    // console.log(allLy); \
+    
+    var mostFrq = commonWords(allLy);
+    console.log(mostFrq);
+    avgSent = avgSentiment();
+    
+    console.log("below is the average sentiment:")
+    console.log(avgSent);
+  }
+  else {
+    // console.log("growing"); 
+    pastLen = curLen; 
   }
 
   background(100);

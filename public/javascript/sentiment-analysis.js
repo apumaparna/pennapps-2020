@@ -8,6 +8,7 @@ let submitBtn;
 let inputBox;
 let sentimentResult;
 let sentimentScores = [];
+let allLyrics = "";
 //const geniusLyrics = require('genius-lyrics-api').getLyrics;
 //const geniusSong = require('genius-lyrics-api').getSong;
 
@@ -21,8 +22,8 @@ const accessToken =
 function sentSetup() {
   console.log("sentiment called");
   sentiment = ml5.sentiment("movieReviews", modelReady);
-  statusEl = createP("Loading Model...");
-  sentimentResult = createP("sentiment score:");
+  // statusEl = createP("Loading Model...");
+  // sentimentResult = createP("sentiment score:");
 }
 
 // function draw() {
@@ -56,6 +57,14 @@ function getSentiment(text) {
   return prediction.score;
 }
 
+function avgSentiment() {
+  var sum = 0;
+  for (let i=0; i<sentimentScores.length; i++) {
+    sum+=sentimentScores[i];
+  }
+  return sum/sentimentScores.length;
+}
+
 function modelReady() {
   // model is ready
   statusEl.html("model loaded");
@@ -72,7 +81,7 @@ until you're gone Better on my own They say, \"You're a little much for me You'r
 So they pull back, make other plans I understand, I'm a liability Get you wild, make you leave I'm a little much for \
 E-a-na-na-na, everyone They're gonna watch me Disappear into the sun You're all gonna watch me Disappear into the sun";
 
-  commonWords(liability);
+  //commonWords(liability);
 }
 
 /******************** Song Lyrics API https://lyricsovh.docs.apiary.io/# ********/
@@ -107,22 +116,21 @@ function getLyrics(artistToFetch, songToFetch) {
         //lyricOutput += `<p class="song-lyric">${lyric}</p>`;
       }
 
-      console.log(lyricOutput);
+      //console.log(lyricOutput);
       sentimentScores.push(getSentiment(lyricOutput)); //add sentiment score to array
-      
-      
+      allLyrics += lyricOutput; //add to lyrics block
+      //console.log(allLyrics);
+      //return lyricOutput;
     });
 }
 
 var stopwords = [
   "about",
-  "after",
   "all",
   "also",
   "am",
   "an",
   "and",
-  "another",
   "any",
   "are",
   "as",
@@ -130,10 +138,7 @@ var stopwords = [
   "be",
   "because",
   "been",
-  "before",
   "being",
-  "between",
-  "both",
   "but",
   "by",
   "came",
@@ -172,23 +177,16 @@ var stopwords = [
   "much",
   "must",
   "my",
-  "never",
   "now",
   "of",
   "on",
-  "only",
   "or",
-  "other",
   "our",
   "out",
-  "over",
   "said",
-  "same",
-  "see",
   "should",
   "since",
   "some",
-  "still",
   "such",
   "take",
   "than",
@@ -220,11 +218,18 @@ var stopwords = [
   "who",
   "with",
   "would",
-  "you",
   "your",
   "a",
   "i",
-  "so"
+  "so",
+  "oh",
+  "yeah",
+  "not",
+  "will",
+  "when",
+  "woo",
+  "yah",
+  "just", "know"
 ];
 
 function frequencies(arr) {
@@ -269,7 +274,7 @@ function commonWords(lyrics) {
   var maxs = [];
   var frqs = frequencies(words); //[words,frqs]
   var frqsCopy = [...frqs[1]];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     //gets 10 most common words
     var max = Math.max.apply(null, frqsCopy);
     maxs.push(max);
@@ -282,9 +287,9 @@ function commonWords(lyrics) {
       frqWords.push(frqs[0][i]);
     }
   }
-  console.log(frqWords);
+  //console.log(frqWords);
   //console.log(words.join(" "));
-  getSentiment(words.join(" "));
+  //getSentiment(words.join(" "));
 
   return frqWords;
 }
