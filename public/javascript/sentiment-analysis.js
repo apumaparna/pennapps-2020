@@ -23,7 +23,7 @@ function sentSetup() {
   console.log("sentiment called");
   sentiment = ml5.sentiment("movieReviews", modelReady);
   // statusEl = createP("Loading Model...");
-  // sentimentResult = createP("sentiment score:");
+  //sentimentResult = createP("sentiment score:");
 }
 
 // function draw() {
@@ -52,7 +52,7 @@ function getSentiment(text) {
   const prediction = sentiment.predict(text);
 
   // display sentiment result on html page
-  sentimentResult.html("Sentiment score: " + prediction.score);
+  // sentimentResult.html("Sentiment score: " + prediction.score);
   console.log("Sentiment score: " + prediction.score);
   return prediction.score;
 }
@@ -67,7 +67,7 @@ function avgSentiment() {
 
 function modelReady() {
   // model is ready
-  statusEl.html("model loaded");
+  // statusEl.html("model loaded");
 
   var liability =
     "Baby really hurt me Crying in the taxi He don't wanna know me Says he made the big mistake of dancing in my storm Says it was poison \
@@ -117,6 +117,7 @@ function getLyrics(artistToFetch, songToFetch) {
       }
 
       //console.log(lyricOutput);
+      console.log(getSentiment(lyricOutput));
       sentimentScores.push(getSentiment(lyricOutput)); //add sentiment score to array
       allLyrics += lyricOutput; //add to lyrics block
       //console.log(allLyrics);

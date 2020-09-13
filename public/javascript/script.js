@@ -14,15 +14,17 @@ let featReady = false;
 let objArr = [];
 let wavArr = [];
 
-let myFont; 
+let myFont;
 
-let allLy = ''
-let pastLen = 0; 
+let allLy = "";
+let pastLen = 0;
 
 let avgSent;
 
 function preload() {
-  myFont = loadFont("https://cdn.glitch.com/0700a511-6546-4ad1-b794-600ce932e80f%2FJosefinSans-Regular.ttf?v=1599958559841")
+  myFont = loadFont(
+    "https://cdn.glitch.com/0700a511-6546-4ad1-b794-600ce932e80f%2FJosefinSans-Regular.ttf?v=1599958559841"
+  );
 }
 
 // let spotData = [];
@@ -30,13 +32,12 @@ function setup() {
   console.log("startScript");
 
   let cnv = createCanvas(windowWidth, windowHeight);
-  cnv.parent("p5sketch"); 
+  cnv.parent("p5sketch");
   colorMode(HSB, 360, 100, 100, 100);
   background(100);
-  textFont(myFont); 
-  
-  sentSetup(); 
+  textFont(myFont);
 
+  sentSetup();
 }
 
 function draw() {
@@ -55,24 +56,24 @@ function draw() {
     //console.log(features.length);
 
     background(100);
-    
+
     //var allLyrics = "";
-    
+
     for (let i = 0; i < data.length; i++) {
       let trSpot = data[i];
       let trFeach = features[i];
-      
-      //console.log(trSpot); 
+
+      //console.log(trSpot);
       var name = trSpot.name;
       console.log(name);
-      var artist = trSpot.artists[0].name; 
-      //console.log(artist); 
-      
-      console.log("get")
+      var artist = trSpot.artists[0].name;
+      //console.log(artist);
+
+      console.log("get");
       //console.log(getLyrics(artist, name))
-      getLyrics(artist, name)
+      getLyrics(artist, name);
       //allLyrics += getLyrics(artist, name); //string
-    
+
       objArr.push(
         new SongObject(
           trFeach.valence,
@@ -88,23 +89,25 @@ function draw() {
     // console.log(allLyrics);
     //console.log(objArr.length);
   }
-  
-  let curLen = allLyrics.length;  
-  if (curLen == pastLen && allLy == '') {
-    // console.log(allLyrics); 
-    allLy = allLyrics; 
+
+  let curLen = allLyrics.length;
+  if (curLen == pastLen && allLy == "") {
+    // console.log(allLyrics);
+    allLy = allLyrics;
     // console.log(allLy); \
-    
+
     var mostFrq = commonWords(allLy);
     console.log(mostFrq);
     avgSent = avgSentiment();
-    
-    console.log("below is the average sentiment:")
+
+    document.getElementById("sentimentScore").innerHTML = `Sentiment score: ${avgSent}`;
+    // var score = document.getElementById("sentimentScore");
+    // score.setAttribute("label", "Sentiment score: " + avgSent);
+    console.log("below is the average sentiment:");
     console.log(avgSent);
-  }
-  else {
-    // console.log("growing"); 
-    pastLen = curLen; 
+  } else {
+    // console.log("growing");
+    pastLen = curLen;
   }
 
   background(100);
@@ -126,7 +129,7 @@ function draw() {
         let op = wave.getOpacity();
         if (op < 0) {
           // console.log("disappeared");
-          removeArr.push(i); 
+          removeArr.push(i);
         }
       }
 
@@ -174,14 +177,13 @@ class SongObject {
     circle(this.x + 3, this.y - 2, this.r);
     fill(this.color, 80, 95, 90);
     circle(this.x, this.y, this.r);
-    
-    textAlign(CENTER, CENTER); 
-    textSize(24); 
+
+    textAlign(CENTER, CENTER);
+    textSize(24);
     textStyle(BOLD);
-    
-    fill(this.color, 100, 60, 100); 
-    text(this.pop, this.x, this.y);  
-    
+
+    fill(this.color, 100, 60, 100);
+    text(this.pop, this.x, this.y);
   }
 
   pulse() {
